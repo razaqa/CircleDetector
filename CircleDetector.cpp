@@ -7,7 +7,7 @@
 using namespace cv;
 using namespace std;
 
-//covert double to string
+//convert double to string
 namespace patch
 {
     template<typename T> std::string to_string(const T& n)
@@ -41,6 +41,13 @@ int main(int argc, char** argv)
 		Mat gray;
 		cvtColor(Original, gray, COLOR_BGR2GRAY);
 		medianBlur(gray, gray, 5);
+		
+		erode(Original, Original, getStructuringElement(MORPH_ELLIPSE, Size(5,5)));
+		dilate(Original, Original, getStructuringElement(MORPH_ELLIPSE,Size(5,5)));
+
+		dilate(Original, Original, getStructuringElement(MORPH_ELLIPSE,Size(5,5)));
+		erode(Original, Original, getStructuringElement(MORPH_ELLIPSE, Size(5,5)));
+		
 		vector<Vec3f> circles;
 		HoughCircles(gray, circles, HOUGH_GRADIENT, 1,
 					 gray.rows/16, // min circles distance
